@@ -1,1 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LandSAGE - Decision Support for Monitoring and Mitigation of Natural Disasters</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary: #EF5350;
+            --secondary: #FF7043;
+            --body-bg: #F8F3F0;
+            --text: #1D1D1B;
+            --secondary-dark: #9C3A26;
+            --orange: #F28C28;
+            --magenta: #E81C64;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--body-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-section img {
+            height: 60px;
+            width: auto;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .project-title {
+            flex: 1;
+            text-align: center;
+            margin: 0 2rem;
+        }
+
+        .project-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--orange), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--secondary-dark);
+            padding: 1rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--orange);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Countries */
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .country-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+
+        /* Partners */
+        .partners-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .partner {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* SDGs */
+        .sdgs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .sdg {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-logos img {
+            height: 50px;
+            width: auto;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo-section {
+                justify-content: center;
+            }
+
+            .project-title {
+                margin: 1rem 0;
+            }
+
+            .project-title h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .countries-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .project-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-section img {
+                height: 45px;
+            }
+
+            .footer-logos img {
+                height: 40px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, .stat, .country-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="images/logos/tein-logo.png" alt="TEIN Cooperation Center">
+                    <img src="images/logos/asia-connect-logo.png" alt="Asia Connect">
+                    <img src="images/logos/eu-logo.png" alt="European Union">
+                </div>
+                <div class="project-title">
+                    <h1>LandSAGE</h1>
+                    <p>Decision Support for Natural Disasters in Southeast Asia</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="nav-links">
+                <a href="#overview">Overview</a>
+                <a href="#objectives">Objectives</a>
+                <a href="#activities">Activities</a>
+                <a href="#outcomes">Outcomes</a>
+                <a href="#partners">Partners</a>
+                <a href="#future">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Strengthening Regional Disaster Preparedness</h2>
+            <p>Advanced visualization technology for landslide monitoring and mitigation across Southeast Asia through collaborative capacity building and data integration.</p>
+            <a href="#overview" class="cta-button">Explore Project</a>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <section id="overview" class="section">
+                <h2>Project Overview</h2>
+                <p>LandSAGE aimed to boost regional disaster preparedness capabilities by deploying CyberCANOE systems running SAGE2 in Southeast Asia. The project facilitated collaborative data visualization, fostering shared expertise in landslide management through a series of comprehensive workshops and technical developments.</p>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number">170+</span>
+                        <span class="stat-label">Participants Trained</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Countries Involved</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Workshops Conducted</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Prototype Delivered</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="objectives" class="section">
+                <h2>Project Objectives</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Primary Goal</h3>
+                        <p>Strengthen decision-support systems for landslide monitoring using SAGE2 and CyberCANOE, facilitating collaborative capacity-building in Southeast Asia.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Training & Development</h3>
+                        <p>Train researchers and engineers on SAGE2 and CyberCANOE usage while co-developing landslide visualization software.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Regional Cooperation</h3>
+                        <p>Enhance data-sharing and disaster risk awareness across Southeast Asian partner institutions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="activities" class="section">
+                <h2>Activities Conducted</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Workshop Series</h3>
+                        <p>Five comprehensive workshops across Japan, Thailand, Korea, Laos, and Vietnam, training participants on CyberCANOE usage and SAGE2 deployment strategies.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Prototype Development</h3>
+                        <p>Created LandSAGE software integrating live data from CDM, TMD, and MRC for real-time disaster monitoring and visualization.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Visibility & Outreach</h3>
+                        <p>Established project website (landsage.info), created YouTube educational content, and published peer-reviewed research.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Participating Countries</h2>
+                <div class="countries-grid">
+                    <div class="country-card">
+                        <h3>🇯🇵 Japan</h3>
+                        <p>National Institute of Advanced Industrial Science and Technology (AIST)</p>
+                    </div>
+                    <div class="country-card">
+                        <h3>🇰🇷 Korea</h3>
+                        <p>Technology partner and workshop host</p>
+                    </div>
+                    <div class="country-card">
+                        <h3>🇹🇭 Thailand</h3>
+                        <p>Thammasat University, Mahidol University, Walailak University</p>
+                    </div>
+                    <div class="country-card">
+                        <h3>🇱🇦 Laos</h3>
+                        <p>National University of Laos</p>
+                    </div>
+                    <div class="country-card">
+                        <h3>🇻🇳 Vietnam</h3>
+                        <p>Vietnam National University (FIMO Center)</p>
+                    </div>
+                    <div class="country-card">
+                        <h3>🇰🇭 Cambodia</h3>
+                        <p>Institute of Technology of Cambodia</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="outcomes" class="section">
+                <h2>Key Outcomes</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>LandSAGE Software</h3>
+                        <p>Open-source, GeoJSON-ready platform integrating weather and river data for comprehensive landslide risk visualization.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Capacity Building</h3>
+                        <p>170 participants from 5 countries trained in CyberCANOE & SAGE2 technologies, building regional expertise.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Infrastructure Development</h3>
+                        <p>Mahidol University built Southeast Asia's first CyberCANOE laboratory, establishing regional technical capabilities.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Global Recognition</h3>
+                        <p>Research published at eScience 2019 conference with YouTube outreach expanding global awareness.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="partners" class="section">
+                <h2>Partner Organizations</h2>
+                <div class="partners-list">
+                    <div class="partner">University of Hawaii at Manoa</div>
+                    <div class="partner">National Institute of Advanced Industrial Science and Technology (AIST), Japan</div>
+                    <div class="partner">Thammasat University, Thailand</div>
+                    <div class="partner">Mahidol University, Thailand</div>
+                    <div class="partner">Walailak University, Thailand</div>
+                    <div class="partner">National University of Laos</div>
+                    <div class="partner">Vietnam National University (FIMO Center)</div>
+                    <div class="partner">Institute of Technology of Cambodia</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Sustainable Development Goals</h2>
+                <div class="sdgs">
+                    <div class="sdg">SDG 9: Industry, Innovation, and Infrastructure</div>
+                    <div class="sdg">SDG 11: Sustainable Cities and Communities</div>
+                    <div class="sdg">SDG 13: Climate Action</div>
+                    <div class="sdg">SDG 17: Partnerships for the Goals</div>
+                </div>
+            </section>
+
+            <section id="future" class="section">
+                <h2>Future Directions</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>LandSAGE2 Development</h3>
+                        <p>Advanced development led by Southeast Asian partners in Vietnam and Laos, building on project foundations.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Regional Expansion</h3>
+                        <p>Expand CyberCANOE deployment to Cambodia and Myanmar, broadening regional coverage and impact.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Policy Integration</h3>
+                        <p>Leverage project insights into government disaster management strategies for sustainable impact.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Academic Collaboration</h3>
+                        <p>Co-develop educational courses and exchange programs in data visualization and disaster management.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logos">
+                <img src="images/logos/tein-logo.png" alt="TEIN Cooperation Center">
+                <img src="images/logos/asia-connect-logo.png" alt="Asia Connect">
+                <img src="images/logos/eu-logo.png" alt="European Union">
+            </div>
+            <p>&copy; 2024 LandSAGE Project - WP5. Advancing disaster preparedness through collaborative technology.</p>
+            <p>Visit: <a href="http://landsage.info" style="color: #FF7043;">landsage.info</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and stats
+        document.querySelectorAll('.card, .stat, .country-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = current.toFixed(0) + (target > 100 ? '+' : '');
+            }, 30);
+        }
+
+        // Animate counters when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const target = parseInt(stat.textContent.replace('+', ''));
+                        animateCounter(stat, target);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
